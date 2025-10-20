@@ -1,21 +1,24 @@
+// tailwind.config.js
 import defaultTheme from 'tailwindcss/defaultTheme';
-import forms from '@tailwindcss/forms';
+
 
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-        './storage/framework/views/*.php',
-        './resources/views/**/*.blade.php',
+        "./resources/**/*.blade.php",
+        "./resources/**/*.js",
+        "./resources/**/*.vue",
+        // 👇 Añade esta línea para escanear los archivos JS de Flowbite en busca de clases
+        "./node_modules/flowbite/**/*.js" 
     ],
-
+    
     theme: {
         extend: {
-            fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-            },
+            // Tus extensiones de tema...
         },
     },
-
-    plugins: [forms],
-};
+    plugins: [
+        // 👇 Requiere el plugin Flowbite
+        require('flowbite/plugin'),
+    ],
+}
