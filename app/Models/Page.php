@@ -4,49 +4,60 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-
-class PageSection extends Model
+class Page extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'page_id',
-        'section_key',
+        'slug',
         'title',
-        'content',
-        'sort_order',
-        'is_active'
+        'meta_description',
+        'meta_keywords',
+        'is_published'
     ];
 
     protected $casts = [
-        'is_active' => 'boolean'
+        'is_published' => 'boolean'
     ];
 
-    public function page(): BelongsTo
+    public function sections(): HasMany
     {
-        return $this->belongsTo(Page::class);
+        return $this->hasMany(PageSection::class);
     }
 
-    public function versions(): HasMany
+    // Helper para obtener sección por key
+    public function getSection($key)
     {
-        return $this->hasMany(PageSectionVersion::class);
+        return $this->sections()->where('section_key', $key)->first();
     }
 
-    // Obtener la última versión publicada
-    public function publishedVersion()
+    // Scope para páginas publicadas
+    public function scopePublished($query)
     {
-        return $this->versions()
-            ->where('status', 'published')
-            ->latest()
-            ->first();
+        return $query->where('is_published', true);
     }
 
-    // Obtener la última versión (draft o published)
-    public function latestVersion()
+    // Scope para buscar por slug
+    public function scopeSlug($query, $slug)
     {
-        return $this->versions()->latest()->first();
+        return $query->where('slug', $slug);
+    }
+
+    // Accesores
+    public function getUrlAttribute(): string
+    {
+        return url('/' . $this->slug);
+    }
+
+    public function getHeroSectionAttribute()
+    {
+        return $this->getSection('hero');
+    }
+
+    public function getAboutSectionsAttribute()
+    {
+        return $this->sections()->where('page_id', $this->id)->get();
     }
 }
