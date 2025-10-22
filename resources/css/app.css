@@ -1,3 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* 1. Usar la directiva unificada de Tailwind v4 */
+@import "tailwindcss";
+
+/* 2. Si usas Flowbite, la nueva sintaxis sería: */
+/* @plugin "flowbite/plugin"; */
+/* @source "../node_modules/flowbite"; */
+
+/* Puedes añadir cualquier CSS personalizado aquí */
