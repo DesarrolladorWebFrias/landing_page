@@ -1,5 +1,8 @@
+// C:\laragon\www\landing_page\vite.config.js
+
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
+import tailwindcss from '@tailwindcss/vite'; // ⬅️ DEBE ESTAR IMPORTADO
 
 // 1. Importar el plugin de Tailwind v4
 import tailwindcss from '@tailwindcss/vite'; 
@@ -14,3 +17,4 @@ export default defineConfig({
         tailwindcss(), 
     ],
 });
+
