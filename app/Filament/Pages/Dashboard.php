@@ -2,23 +2,20 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Pages\Page;
+use Filament\Pages\Dashboard as BaseDashboard;
 
-class Dashboard extends Page
+class Dashboard extends BaseDashboard
 {
-    protected static ?string $navigationIcon = 'heroicon-o-home';
-
-    protected static string $view = 'filament.pages.dashboard';
-
-    protected static ?int $navigationSort = -2;
-
-    public static function getNavigationLabel(): string
+    // Elimina la propiedad $navigationIcon si existe
+    // Filament ya proporciona un icono por defecto
+    
+    public function getHeading(): string
     {
-        return static::$navigationLabel ?? static::$title ?? __('filament::pages/dashboard.title');
+        return 'Dashboard Principal';
     }
 
-    public function getTitle(): string
+    public function getSubheading(): string
     {
-        return static::$title ?? __('filament::pages/dashboard.title');
+        return 'Resumen del sistema de testimonios';
     }
 }
