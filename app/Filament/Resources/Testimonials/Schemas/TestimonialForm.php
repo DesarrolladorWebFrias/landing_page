@@ -6,6 +6,7 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\RichEditor; // ✅ AGREGAR ESTE IMPORT
 use Filament\Schemas\Schema;
 
 class TestimonialForm
@@ -15,9 +16,27 @@ class TestimonialForm
         return $schema
             ->components([
                 TextInput::make('title'),
-                Textarea::make('body')
+                RichEditor::make('body')
                     ->required()
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                     ->toolbarButtons([
+                        'blockquote',
+                        'bold',
+                        'bulletList',
+                        'codeBlock',
+                        'h2',
+                        'h3',
+                        'italic',
+                        'link',
+                        'orderedList',
+                        'redo',
+                        'strike',
+                        'underline',
+                        'undo',
+                    ])
+                    ->fileAttachmentsDirectory('testimonials')
+                    ->maxLength(5000),
+                    
                 TextInput::make('author_name'),
                 TextInput::make('author_position'),
                 TextInput::make('organization'),
